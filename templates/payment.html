@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment | Event Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/payment.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }} ">
+</head>
+<body>
+    <style>
+     body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(
+        120deg,
+        #1d2671,
+        #17d2e7,
+        #fc11c1
+    );
+    background-size: 260% 260%;
+    animation: gradientFlow 12s ease infinite;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+.payment-container {
+    width: 400px;
+    background: white;
+    margin: 80px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.event-info {
+    background: #f5f5f5;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+button:hover {
+    background: #218838;
+}
+    </style>
+
+    <div class="navbar">
+    <h2>💳 Payment Page</h2>
+    <div>
+        <a href="{{ url_for('dashboard') }}">Home</a>
+        <a href="{{ url_for('events') }}">Events</a>
+        <a href="{{ url_for('my_bookings') }}">My Bookings</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</div>
+
+
+<div class="payment-container">
+    <h2>💳 Debit Card Payment</h2>
+
+    <div class="event-info">
+        <p><strong>Event:</strong> {{ event.title }}</p>
+        <p><strong>Price:</strong> ₹{{ event.price }}</p>
+    </div>
+
+    <form method="POST">
+        <label>Card Number</label>
+        <input type="text" maxlength="16" placeholder="1234 5678 9012 3456" required>
+
+        <label>Card Holder Name</label>
+        <input type="text" placeholder="" required>
+
+        <div class="row">
+            <div>
+                <label>Expiry</label>
+                <input type="text" placeholder="MM/YY" required>
+            </div>
+            <div>
+                <label>CVV</label>
+                <input type="password" maxlength="3" required>
+            </div>
+        </div>
+
+        <button type="submit">Pay ₹{{ event.price }}</button>
+    </form>
+</div>
+
+</body>
+</html>

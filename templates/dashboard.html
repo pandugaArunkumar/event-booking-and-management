@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Event Booking</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6f9;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: #1f2a44;
+            color: white;
+            padding: 14px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+
+        .navbar a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            margin: 20px;
+            padding: 70px 20px;
+            border-radius: 22px;
+            text-align: center;
+            color: white;
+            background: linear-gradient(270deg, #8e2de2, #ff416c, #8e2de2);
+            background-size: 600% 600%;
+            animation: gradientMove 12s ease infinite;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .hero a {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 14px 34px;
+            background: white;
+            color: #ff416c;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .hero a:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===== SLIDER ===== */
+        .slider {
+            max-width: 1200px;
+            height: 420px;
+            margin: 50px auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+        }
+
+        .slider img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+
+        .slider img.active {
+            opacity: 1;
+        }
+        /* ===== TRENDING EVENTS ===== */
+.trending {
+    background: #f9fafc;
+}
+
+.trending-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.trend-card {
+    position: relative;
+    background: white;
+    padding: 22px;
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    cursor:auto;
+}
+
+.trend-card:hover {
+    transform: translateY(-10px) scale(1.04);
+    box-shadow: 0 20px 45px rgba(123,47,247,0.35);
+}
+
+.trend-card h3 {
+    color: #7b2ff7;
+    margin-bottom: 8px;
+}
+
+.trend-card p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* ===== BADGES ===== */
+.trend-badge {
+    position: absolute;
+    top: -12px;
+    right: 15px;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
+    padding: 6px 14px;
+    font-size: 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.trend-badge.purple {
+    background: linear-gradient(135deg, #7b2ff7, #4facfe);
+}
+
+.trend-badge.green {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+}
+
+.trend-badge.orange {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+}
+
+
+        /* ===== FEATURED EVENTS ===== */
+        .section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .section h2 {
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .events {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .event-card h3 {
+            color: #7b2ff7;
+        }
+
+        .event-card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #4b546a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #f39c12;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>🎉 Event Booking</h2>
+    <div>
+        <a href="{{ url_for('dashboard') }}">Home</a>
+        <a href="{{ url_for('events') }}">Events</a>
+        <a href="{{ url_for('my_bookings') }}">My Bookings</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>Discover • Book • Celebrate 🎉</h1>
+    <p>Concerts, Tech Events, Workshops & Celebrations — All in One Place</p>
+    <a href="{{ url_for('events') }}">Browse Events →</a>
+</div>
+
+<!-- IMAGE SLIDER -->
+<div class="slider">
+    <img class="slide active" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819">
+    <img class="slide" src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678">
+    <img class="slide" src="https://images.unsplash.com/photo-1540575467063-178a50c2df87">
+    <img class="slide" src="https://images.unsplash.com/photo-1523580494863-6f3031224c94">
+</div>
+   <!-- ===== TRENDING EVENTS ===== -->
+<div class="section trending">
+    <h2>🔥 Trending Events</h2>
+
+    <div class="trending-grid">
+
+        <div class="trend-card">
+            <span class="trend-badge">🔥 HOT</span>
+            <h3>🎤 Motivational Talk</h3>
+            <p>Inspiring speakers • Limited seats</p>
+        </div>
+
+        <div class="trend-card">
+            <span class="trend-badge purple">⭐ TRENDING</span>
+            <h3>💻 Tech Conference</h3>
+            <p>AI, Web & Cloud innovations</p>
+        </div>
+
+        <div class="trend-card">
+            <span class="trend-badge green">🚀 POPULAR</span>
+            <h3>🚀 Startup Meetup</h3>
+            <p>Founders • Investors • Networking</p>
+        </div>
+
+        <div class="trend-card">
+            <span class="trend-badge orange">🎶 LIVE</span>
+            <h3>🎵 Music Night</h3>
+            <p>Live bands & DJ performances</p>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- FEATURED EVENTS -->
+<div class="section">
+    <h2>🌟 Featured Events</h2>
+
+    <div class="events">
+        <div class="event-card">
+            <h3>🎬 Short Film Screening & Awards</h3>
+            <p>Live bands, DJs & unlimited fun</p>
+        </div>
+
+        <div class="event-card">
+            <h3>💻 AI Workshop</h3>
+            <p>Hands-on AI & ML training</p>
+        </div>
+
+        <div class="event-card">
+            <h3>🎤 Stand-up Comedy Festival</h3>
+            <p>ultimate fun</p>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    © 2026 Event Booking Management System<br>
+    Developed by Arun Kumar<br>
+    Contact: +91 9010755083<br>
+    <a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+</footer>
+
+<script>
+    const slides = document.querySelectorAll(".slide");
+    let index = 0;
+
+    setInterval(() => {
+        slides[index].classList.remove("active");
+        index = (index + 1) % slides.length;
+        slides[index].classList.add("active");
+    }, 4000);
+</script>
+
+</body>
+</html>
+         

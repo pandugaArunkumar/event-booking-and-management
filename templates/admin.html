@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel | Event Booking</title>
+
+    <!-- CSS -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>Admin Panel</h2>
+    <div>
+        <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('admin_events') }}">Events</a>
+        <a href="{{ url_for('admin_bookings') }}">Bookings</a>
+        <a href="{{ url_for('logout') }}" onclick="return confirmLogout()">Logout</a>
+    </div>
+</div>
+
+
+<!-- ADMIN CONTENT -->
+<div class="container">
+
+    <h2 style="text-align:center;">Add New Event</h2>
+    <p style="text-align:center; color:#555; margin-bottom:30px;">
+        Create and manage events for users
+    </p>
+
+    <!-- ADD EVENT FORM -->
+    <div class="form-box">
+        <form method="POST" onsubmit="return validateEvent()">
+
+            <div class="form-group">
+                <label>Event Title</label>
+                <input type="text" name="title" id="title" placeholder="Enter event name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Event Date</label>
+                <input type="date" name="event_date" id="event_date" required>
+            </div>
+
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" name="location" id="location" placeholder="City / Venue" required>
+            </div>
+
+            <div class="form-group">
+                <label>Ticket Price (₹)</label>
+                <input type="number" name="price" id="price" placeholder="Enter price" required>
+            </div>
+
+            <div class="form-group">
+                <label>Available Seats</label>
+                <input type="number" name="seats" id="seats" placeholder="Enter seats" required>
+            </div>
+
+            <button type="submit" class="btn">Add Event</button>
+        </form>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 Event Booking Management System
+</div>
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

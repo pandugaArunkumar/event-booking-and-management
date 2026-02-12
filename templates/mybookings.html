@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Bookings | Event Booking System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}  ">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mybooking.css') }}">
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+    <h2>🎟 Event Booking</h2>
+    <div>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('events') }}">Events</a>
+        <a href="{{ url_for('logout') }}" onclick="return confirmLogout()">Logout</a>
+    </div>
+</div>
+
+<!-- ===== PAGE CONTENT ===== -->
+<div class="container">
+    <h2 class="page-title">My Bookings</h2>
+
+    {% if bookings %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Event</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Booked On</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.booking_id or '-' }}</td>
+
+
+                    <td>{{ booking.title }}</td>
+                    <td>{{ booking.event_date }}</td>
+                    <td>{{ booking.location }}</td>
+                    <td>{{ booking.booking_date }}</td>
+
+                    <td>
+                        {% if booking.status == 'Booked' %}
+                            <span class="status booked">Booked</span>
+                        {% else %}
+                            <span class="status cancelled">Cancelled</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                       {% if booking.status == 'Booked' %}
+                        <a href="{{ url_for('cancel_booking', booking_id=booking.booking_id) }}"
+   onclick="return confirm('Cancel this booking?')" class="btn-cancel">
+   Cancel
+</a>
+
+                        {% else %}
+                        —
+                        {% endif %}
+
+
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
+        <p class="empty-msg">You have no bookings yet.</p>
+    {% endif %}
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

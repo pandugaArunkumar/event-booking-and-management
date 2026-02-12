@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard | Event Booking</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<div class="navbar">
+    <h2>Admin Panel</h2>
+    <div>
+        <a href="{{ url_for('admin_dashboard') }}" class="active">Dashboard</a>
+        <a href="{{ url_for('admin_events') }}">Events</a>
+        <a href="{{ url_for('admin_bookings') }}">Bookings</a>
+        <a href="{{ url_for('logout') }}" onclick="return confirmLogout()">Logout</a>
+    </div>
+</div>
+
+<!-- ================= HERO SECTION ================= -->
+<section class="hero">
+    <video autoplay muted loop playsinline class="hero-video">
+        <source src="{{ url_for('static', filename='videos/dashboard.mp4') }}" type="video/mp4">
+    </video>
+
+    <div class="hero-overlay">
+        <h1>Admin Dashboard</h1>
+        <p>Monitor events, bookings & performance</p>
+    </div>
+</section>
+
+<!-- ================= MAIN CONTAINER ================= -->
+<div class="container">
+
+    <h2 class="page-title">System Overview</h2>
+
+    <!-- ===== STATS ===== -->
+    <div class="stats-grid">
+
+        <div class="stat-card blue">
+            <span class="icon">🎉</span>
+            <h3>Total Events</h3>
+            <p>{{ total_events }}</p>
+        </div>
+
+        <div class="stat-card green">
+            <span class="icon">👥</span>
+            <h3>Total Users</h3>
+            <p>{{ total_users }}</p>
+        </div>
+
+        <div class="stat-card purple">
+            <span class="icon">📊</span>
+            <h3>Total Bookings</h3>
+            <p>{{ total_bookings }}</p>
+        </div>
+
+        <div class="stat-card teal">
+            <span class="icon">✅</span>
+            <h3>Active Bookings</h3>
+            <p>{{ active_bookings }}</p>
+        </div>
+
+        <div class="stat-card red">
+            <span class="icon">❌</span>
+            <h3>Cancelled</h3>
+            <p>{{ cancelled_bookings }}</p>
+        </div>
+
+    </div>
+
+    <!-- ===== CHARTS ===== -->
+    <div class="charts">
+
+        <div class="chart-box">
+            <h3>Bookings Status</h3>
+            <canvas id="bookingStatusChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h3>Bookings Per Event</h3>
+            <canvas id="eventBookingsChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= JS ================= -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* ===== Doughnut Chart ===== */
+    new Chart(document.getElementById('bookingStatusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Booked', 'Cancelled'],
+            datasets: [{
+                data: [{{ active_bookings }}, {{ cancelled_bookings }}],
+                backgroundColor: ['#2ecc71', '#e74c3c'],
+                borderWidth: 3,
+                borderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: '65%',
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    /* ===== Gradient Bar Chart ===== */
+    const ctx = document.getElementById('eventBookingsChart').getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, '#6a11cb');
+    gradient.addColorStop(1, '#2575fc');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ event_labels | tojson }},
+            datasets: [{
+                label: 'Bookings',
+                data: {{ booking_counts | tojson }},
+                backgroundColor: gradient,
+                borderRadius: 12
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Booking | Login</title>
+</head>
+<body>
+  
+</body>
+</html>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="toast-container">
+      {% for category, message in messages %}
+        <div class="toast {{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+
+<div class="login-box">
+    <h2>Welcome Back 👋</h2>
+    <p>Login to continue</p>
+
+    <form method="POST" onsubmit="return validateLogin()">
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <label>Password</label>
+        <input type="password" name="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div class="register">
+        Don’t have an account? <a href="/register">Register here</a>
+    </div>
+</div>

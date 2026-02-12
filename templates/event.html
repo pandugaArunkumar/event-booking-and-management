@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Events | Event Booking</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:#f3f5f9;
+}
+
+/* ================= NAVBAR ================= */
+.navbar{
+    background:#111827;
+    padding:18px 50px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:white;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+    margin-left:25px;
+    transition:.3s;
+}
+
+.navbar a:hover{
+    color:#ff4b7d;
+}
+
+/* ================= HERO SLIDER ================= */
+.slider{
+    width:100%;
+    height:650px;
+    position:relative;
+    overflow:hidden;
+}
+
+.slide{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transform:scale(1.1);
+    transition:all 1.5s ease;
+}
+
+.slide.active{
+    opacity:1;
+    transform:scale(1);
+}
+
+/* Overlay Text */
+.slider-overlay{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    color:white;
+    z-index:10;
+}
+
+.slider-overlay h1{
+    font-size:55px;
+    letter-spacing:2px;
+}
+
+.slider-overlay p{
+    font-size:18px;
+    opacity:.9;
+}
+
+/* ================= SECTION TITLE ================= */
+.section-title{
+    text-align:center;
+    margin:70px 0 30px;
+    font-size:30px;
+    color:#1f2937;
+}
+
+/* ================= SEARCH ================= */
+.search-container{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+#searchInput{
+    width:60%;
+    padding:18px 30px;
+    border-radius:50px;
+    border:none;
+    outline:none;
+    font-size:16px;
+    background:white;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    transition:.4s ease;
+}
+
+#searchInput:focus{
+    transform:scale(1.05);
+    box-shadow:0 20px 40px rgba(123,47,247,.35);
+}
+
+/* ================= EVENTS GRID ================= */
+.events-container{
+    max-width:1400px;
+    margin:auto;
+    padding:20px 40px 80px;
+}
+
+.events-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:40px;
+}
+
+/* ================= EVENT CARD ================= */
+.event-card{
+    position:relative;
+    border-radius:25px;
+    overflow:hidden;
+    background:rgba(255,255,255,0.8);
+    backdrop-filter:blur(15px);
+    box-shadow:0 25px 60px rgba(0,0,0,.15);
+    transition:.5s ease;
+}
+
+.event-card:hover{
+    transform:translateY(-15px);
+    box-shadow:0 35px 70px rgba(123,47,247,.4);
+}
+
+/* Shine Effect */
+.event-card::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:-75%;
+    width:50%;
+    height:100%;
+    background:linear-gradient(120deg,rgba(255,255,255,.3),rgba(255,255,255,0));
+    transform:skewX(-25deg);
+}
+
+.event-card:hover::before{
+    animation:shine 1s;
+}
+
+@keyframes shine{
+    100%{left:125%;}
+}
+
+.event-card img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.event-card:hover img{
+    transform:scale(1.1);
+}
+
+.event-content{
+    padding:25px;
+}
+
+.event-content h3{
+    color:#7b2ff7;
+    margin-bottom:10px;
+}
+
+.event-content p{
+    font-size:14px;
+    color:#555;
+    margin:6px 0;
+}
+
+/* Book Button */
+.btn-book{
+    display:inline-block;
+    margin-top:18px;
+    padding:12px 28px;
+    border-radius:30px;
+    background:linear-gradient(135deg,#7b2ff7,#ff416c);
+    color:white;
+    font-weight:bold;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.btn-book:hover{
+    transform:scale(1.1);
+}
+
+/* FILTER ANIMATION */
+.event-card.hide{
+    opacity:0;
+    transform:scale(.8);
+    pointer-events:none;
+    height:0;
+    margin:0;
+    padding:0;
+    overflow:hidden;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>🎟 Event Booking</h2>
+    <div>
+        <a href="{{ url_for('dashboard') }}">Home</a>
+        <a href="{{ url_for('my_bookings') }}">My Bookings</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</div>
+
+<!-- BIG PREMIUM SLIDER -->
+<div class="slider">
+
+    <div class="slider-overlay">
+        <h1>Discover Amazing Events</h1>
+        <p>Concerts • Tech • Workshops • Festivals</p>
+    </div>
+
+    <img class="slide active" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819">
+    <img class="slide" src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678">
+    <img class="slide" src="https://images.unsplash.com/photo-1540575467063-178a50c2df87">
+    <img class="slide" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30">
+
+</div>
+
+<h2 class="section-title">✨ Explore Events</h2>
+
+<div class="events-container">
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="🔍 Search events..."
+               onkeyup="filterEvents()">
+    </div>
+
+    <div class="events-grid">
+
+        {% for e in events %}
+        <div class="event-card">
+
+            <img src="{{ url_for('static', filename='images/events/' ~ e.title|lower|replace(' ', '') ~ '.jpg') }}"
+                 onerror="this.src='https://images.unsplash.com/photo-1492684223066-81342ee5ff30'">
+
+            <div class="event-content">
+                <h3>{{ e.title }}</h3>
+                <p><b>Date:</b> {{ e.event_date }}</p>
+                <p><b>Location:</b> {{ e.location }}</p>
+                <p><b>Price:</b> ₹{{ e.price }}</p>
+                <p><b>Seats:</b> {{ e.seats }}</p>
+
+                {% if e.seats > 0 %}
+                    <a href="{{ url_for('payment', event_id=e.id) }}" class="btn-book">
+                        Book Now
+                    </a>
+                {% else %}
+                    <span style="color:red;font-weight:bold;">Sold Out</span>
+                {% endif %}
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+<script>
+const slides=document.querySelectorAll(".slide");
+let index=0;
+setInterval(()=>{
+    slides[index].classList.remove("active");
+    index=(index+1)%slides.length;
+    slides[index].classList.add("active");
+},4500);
+
+function filterEvents(){
+    const input=document.getElementById("searchInput").value.toLowerCase();
+    const cards=document.querySelectorAll(".event-card");
+
+    cards.forEach(card=>{
+        const text=card.innerText.toLowerCase();
+        if(text.includes(input)){
+            card.classList.remove("hide");
+        }else{
+            card.classList.add("hide");
+        }
+    });
+}
+</script>
+
+</body>
+</html>

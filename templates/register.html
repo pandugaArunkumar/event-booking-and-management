@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | Event Booking System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>Event Booking</h2>
+    <div>
+        <a href="/login">Login</a>
+        <a href="/register" class="active">Register</a>
+    </div>
+</div>
+
+<!-- REGISTER SECTION -->
+<div class="auth-container">
+    <div class="register-card">
+        <h2>Create Account ✨</h2>
+        <p class="subtitle">Join & start booking amazing events</p>
+
+        <form method="POST" onsubmit="return validateRegister()">
+
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter full name" required>
+            </div>
+
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter email" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" name="password" placeholder="Create password" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Register</button>
+        </form>
+
+        <p class="switch">
+            Already have an account?
+            <a href="/login">Login here</a>
+        </p>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

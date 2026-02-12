@@ -1,0 +1,246 @@
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+
+.page-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1f2937;
+}
+
+.search-box {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.event-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    transition: transform 0.3s;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+}
+
+.event-card h3 {
+    color: #2563eb;
+    margin-bottom: 10px;
+}
+
+.event-card p {
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+.btn-book {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 15px;
+    background: #22c55e;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-book:hover {
+    background: #16a34a;
+}
+.alert {
+    max-width: 500px;
+    margin: 15px auto;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.alert.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.alert.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+.book-btn.disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.book-btn.disabled:hover {
+    background-color: #aaa;
+}
+/* FLASH MESSAGES */
+.alert {
+    width: fit-content;
+    margin: 15px auto;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.alert.success {
+    background: #d4edda;
+    color: #155724;
+    border-left: 5px solid #28a745;
+}
+
+.alert.error {
+    background: #f8d7da;
+    color: #721c24;
+    border-left: 5px solid #dc3545;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= EVENT CARD UPGRADE ================= */
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.event-card {
+    background: linear-gradient(135deg, #ffffff, #f3f4f6);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    transition: all 0.35s ease;
+    position: relative;
+}
+
+.event-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 30px 50px rgba(0,0,0,0.25);
+}
+
+.event-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.event-content {
+    padding: 18px;
+}
+
+.event-content h3 {
+    color: #4f46e5;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+/* Price & Seats highlight */
+.event-content p {
+    font-size: 14px;
+    margin: 6px 0;
+    color: #333;
+}
+
+/* Book Button */
+.book-btn {
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.book-btn:hover {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    transform: scale(1.05);
+}
+
+.book-btn.disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* ================= BADGES ================= */
+
+.event-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    color: white;
+    background: linear-gradient(135deg, #6366f1, #9333ea);
+}
+
+/* Optional category colors */
+.event-card h3 {
+    margin-top: 8px;
+}
+/* ================= BADGES ================= */
+
+.event-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    color: white;
+    background: linear-gradient(135deg, #6366f1, #9333ea);
+}
+
+/* Optional category colors */
+.event-card h3 {
+    margin-top: 8px;
+}
+.event-badge.music {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+.event-badge.sports {
+    background: linear-gradient(135deg, #10b981, #047857);
+}
+
+.event-badge.tech {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+}
+.event-badge.artfest {
+    background: linear-gradient(135deg, #ec4899, #be185d);
+}
+
+.event-badge.networking {
+    background: linear-gradient(135deg, #f43f5e, #9d174d);
+}
+
+.event-badge.workshop {
+    background: linear-gradient(135deg, #22d3ee, #0c4a6e);
+}
+.event-badge.motivational {
+    background: linear-gradient(135deg, #f97316, #b45309);
+}
+.event-badge.default {
+    background: linear-gradient(135deg, #6b7280, #374151);
+}
