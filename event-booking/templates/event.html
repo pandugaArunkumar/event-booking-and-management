@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Events | Event Booking System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/events.css') }}">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Event Booking</h2>
+    <div>
+        <a href="{{ url_for('my_bookings') }}">My Bookings</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout" onclick="return confirmLogout()">Logout</a>
+    </div>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, msg in messages %}
+    <div class="alert {{ category }}">{{ msg }}</div>
+  {% endfor %}
+{% endwith %}
+
+<div class="container">
+    <h2 class="page-title">Available Events</h2>
+
+    <input type="text" class="search-box" placeholder="Search events..." onkeyup="filterEvents(this.value)">
+
+    <div class="events-grid">
+        {% for e in events %}
+        <div class="event-card">
+
+            <div class="event-image">
+                <img src="{{ url_for('static', filename='images/events/' ~ e.title|lower|replace(' ', '') ~ '.jpg') }}"
+                     onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/events/default.jpg') }}';">
+            </div>
+
+            <div class="event-content">
+                <span class="event-badge">{{ e.title }}</span>
+
+                <h3>{{ e.title }}</h3>
+                <p><b>Date:</b> {{ e.event_date }}</p>
+                <p><b>Location:</b> {{ e.location }}</p>
+                <p><b>Price:</b> ₹{{ e.price }}</p>
+                <p><b>Seats:</b> {{ e.seats }}</p>
+
+                {% if e.seats > 0 %}
+                    <a href="{{ url_for('payment', event_id=e.id) }}" class="btn-book">
+                        Book Now
+                    </a>
+                {% else %}
+                    <button class="book-btn disabled" disabled>
+                        Sold Out
+                    </button>
+                {% endif %}
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

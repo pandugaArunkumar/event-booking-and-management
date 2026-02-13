@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Event | Admin</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+
+    <style>
+        /* ===== PAGE BACKGROUND ===== */
+        body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(
+        120deg,
+        #1d2671,
+        #17d2e7,
+        #fc11c1
+    );
+    background-size: 260% 260%;
+    animation: gradientFlow 12s ease infinite;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: #243447;
+            color: white;
+            padding: 24px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            transition: background 0.3s;
+        }
+
+        .navbar a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* ===== FORM CONTAINER ===== */
+        .edit-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .edit-card {
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.95);
+            width: 420px;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.7s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .edit-card h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        /* ===== INPUTS ===== */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            font-size: 14px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #7b2ff7;
+            box-shadow: 0 0 0 3px rgba(123,47,247,0.2);
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-group {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .btn-update {
+            background: linear-gradient(135deg, #3498db, #6dd5fa);
+            color: white;
+        }
+
+        .btn-update:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #2980b9, #5dade2);
+        }
+
+        .btn-back {
+            background: #ecf0f1;
+            color: #2c3e50;
+            text-align: center;
+            text-decoration: none;
+            line-height: 40px;
+        }
+
+        .btn-back:hover {
+            background: #dcdde1;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+    <h3>Edit Event</h3>
+    <a href="{{ url_for('admin_events') }}">← Back</a>
+</div>
+
+<!-- ===== FORM ===== -->
+<div class="edit-wrapper">
+    <div class="edit-card">
+        <h2>Update Event</h2>
+
+        <form method="POST">
+            <div class="form-group">
+                <label>Event Title</label>
+                <input type="text" name="title" value="{{ event.title }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Event Date</label>
+                <input type="date" name="event_date" value="{{ event.event_date }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" name="location" value="{{ event.location }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Price (₹)</label>
+                <input type="number" name="price" value="{{ event.price }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Available Seats</label>
+                <input type="number" name="seats" value="{{ event.seats }}" required>
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-update">
+                    Update Event
+                </button>
+                <a href="{{ url_for('admin_events') }}" class="btn btn-back">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
